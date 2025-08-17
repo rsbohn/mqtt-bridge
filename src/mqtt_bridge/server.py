@@ -463,7 +463,10 @@ async def handle_call_tool(
 
             # Create MQTT client
             client = mqtt.Client(
-                client_id=client_id, userdata={"connection_id": connection_id}, protocol=mqtt.MQTTv5
+                callback_api_version=mqtt.CallbackAPIVersion.VERSION2,
+                client_id=client_id,
+                userdata={"connection_id": connection_id},
+                protocol=mqtt.MQTTv5,
             )
 
             if username and password:
