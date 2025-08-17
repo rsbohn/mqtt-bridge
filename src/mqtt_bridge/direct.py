@@ -29,7 +29,7 @@ mqtt_subscriptions: Dict[str, List[str]] = {}
 received_messages: List[dict] = []
 
 
-def on_message_callback(client, userdata, message):
+def on_message_callback(client, userdata, message, properties=None):
     """Callback for when a message is received from MQTT broker."""
     try:
         payload = message.payload.decode("utf-8", errors="ignore")
@@ -78,7 +78,7 @@ def mqtt_connect(
     if not client_id:
         client_id = f"mcp-mqtt-direct-{connection_id}"
 
-    client = mqtt.Client(client_id=client_id, userdata={"connection_id": connection_id})
+    client = mqtt.Client(client_id=client_id, userdata={"connection_id": connection_id}, protocol=mqtt.MQTTv5)
 
     if username and password:
         client.username_pw_set(username, password)
