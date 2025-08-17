@@ -420,7 +420,7 @@ async def handle_list_tools() -> list[types.Tool]:
     ]
 
 
-def on_message_callback(client, userdata, message):
+def on_message_callback(client, userdata, message, properties=None):
     """Callback for when a message is received from MQTT broker."""
     try:
         payload = message.payload.decode("utf-8", errors="ignore")
@@ -463,7 +463,7 @@ async def handle_call_tool(
 
             # Create MQTT client
             client = mqtt.Client(
-                client_id=client_id, userdata={"connection_id": connection_id}
+                client_id=client_id, userdata={"connection_id": connection_id}, protocol=mqtt.MQTTv5
             )
 
             if username and password:
